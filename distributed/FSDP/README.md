@@ -1,3 +1,4 @@
+Fully Sharded Data Parallel （FSDP）完全分片数据并行，数据并行的训练方法，它实际上就是ZeRO-3
 ## FSDP T5
 
 To run the T5 example with FSDP for text summarization:
