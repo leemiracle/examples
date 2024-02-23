@@ -1,3 +1,4 @@
+# 深度卷积生成对抗网络
 from __future__ import print_function
 import argparse
 import os
@@ -129,7 +130,7 @@ def weights_init(m):
         torch.nn.init.normal_(m.weight, 1.0, 0.02)
         torch.nn.init.zeros_(m.bias)
 
-
+# 生成
 class Generator(nn.Module):
     def __init__(self, ngpu):
         super(Generator, self).__init__()
@@ -171,7 +172,7 @@ if opt.netG != '':
     netG.load_state_dict(torch.load(opt.netG))
 print(netG)
 
-
+#鉴别器
 class Discriminator(nn.Module):
     def __init__(self, ngpu):
         super(Discriminator, self).__init__()
@@ -211,13 +212,13 @@ netD.apply(weights_init)
 if opt.netD != '':
     netD.load_state_dict(torch.load(opt.netD))
 print(netD)
-
+# 标准和label差距
 criterion = nn.BCELoss()
 
 fixed_noise = torch.randn(opt.batchSize, nz, 1, 1, device=device)
 real_label = 1
 fake_label = 0
-
+# 优化器
 # setup optimizer
 optimizerD = optim.Adam(netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
 optimizerG = optim.Adam(netG.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
@@ -228,7 +229,7 @@ if opt.dry_run:
 for epoch in range(opt.niter):
     for i, data in enumerate(dataloader, 0):
         ############################
-        # (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))
+        # (1) Update D鉴别器 network: maximize log(D(x)) + log(1 - D(G(z)))
         ###########################
         # train with real
         netD.zero_grad()
@@ -254,7 +255,7 @@ for epoch in range(opt.niter):
         optimizerD.step()
 
         ############################
-        # (2) Update G network: maximize log(D(G(z)))
+        # (2) Update G生成器 network: maximize log(D(G(z)))
         ###########################
         netG.zero_grad()
         label.fill_(real_label)  # fake labels are real for generator cost
