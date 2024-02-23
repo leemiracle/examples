@@ -1,3 +1,5 @@
+Slurm是一个用于集群的作业调度程序，用于接受作业提交文件，并在请求的资源可用时对其进行调度；从单GPU到slurm集群（每个都是上个的扩充）
+DDP（Distributed Data Parallel）
 # distributed-pytorch
 
 Code for the DDP tutorial series at https://pytorch.org/tutorials/beginner/ddp_series_intro.html
